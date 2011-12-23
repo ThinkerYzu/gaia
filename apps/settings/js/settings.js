@@ -38,7 +38,7 @@
         },
 
         deactivate: function() {
-            window.navigator.deactivate();
+          window.navigator.deactivate("0001", "0");
             dump("deactivate");
         },
     }
