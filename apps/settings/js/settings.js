@@ -6,7 +6,6 @@
 (function() {
   var DataCall = {
 	  init: function() {
-      dump("DataCall.init");
       try {
         this._init();
       } catch(e) {
@@ -48,14 +47,12 @@
       
       phone.setupDataCall(cdma, apn,
                           user, passwd, chappap, pdptype);
-      dump("connect");
     },
 
     deactivateDataCall: function() {
       var phone = window.navigator.mozTelephony;
       
       phone.deactivateDataCall("0001", "0");
-      dump("deactivate");
     },
   }
   
