@@ -4,23 +4,36 @@
 'use strict';
 
 (function() {
-  DataCall = {
+  var DataCall = {
 	  init: function() {
+      dump("DataCall.init");
+      try {
+        this._init();
+      } catch(e) {
+        dump("Exception: " + e);
+      }
+    },
+    
+    _init: function() {
       var dcenable = document.getElementById("data-call-enable");
       
       if(dcenable.checked) {
         this.makeDataCall();
       }
-      dcenable.addEventListener("changed", this.onChange);
+      dcenable.addEventListener("change", this.onChange.bind(this));
 	  },
 
     onChange: function(evt) {
-      var dcenable = event.originalTarget;
-
-      if(dcenable.checked) {
-        this.makeDataCall();
-      } else {
-        this.deactivate();
+      try {
+        var dcenable = evt.originalTarget;
+        
+        if(dcenable.checked) {
+          this.makeDataCall();
+        } else {
+        this.deactivateDataCall();
+        }
+      } catch(e) {
+        dump("Exception: " + e);
       }
     },
 
@@ -31,17 +44,24 @@
       var passwd = "";
       var chappap = 0;
       var pdptype = "IP";
+      var phone = window.navigator.mozTelephony;
       
-      window.navigator.connect(cdma, apn,
-                               user, passwd, chappap, pdptype);
+      phone.setupDataCall(cdma, apn,
+                          user, passwd, chappap, pdptype);
       dump("connect");
     },
 
-    deactivate: function() {
-      window.navigator.deactivate("0001", "0");
+    deactivateDataCall: function() {
+      var phone = window.navigator.mozTelephony;
+      
+      phone.deactivateDataCall("0001", "0");
       dump("deactivate");
     },
   }
+  
+  window.addEventListener("load", function() {
+    DataCall.init();
+  });
 })();
 
 
