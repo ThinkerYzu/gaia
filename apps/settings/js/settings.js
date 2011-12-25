@@ -29,7 +29,7 @@
         if(dcenable.checked) {
           this.makeDataCall();
         } else {
-        this.deactivateDataCall();
+          this.deactivateDataCall();
         }
       } catch(e) {
         dump("Exception: " + e);
@@ -37,7 +37,7 @@
     },
 
     makeDataCall: function() {
-      var cdma = 1;
+      var radioTech = 1;
       var apn = "internet";
       var user = "";
       var passwd = "";
@@ -45,14 +45,14 @@
       var pdptype = "IP";
       var phone = window.navigator.mozTelephony;
       
-      phone.setupDataCall(cdma, apn,
+      phone.setupDataCall(radioTech, apn,
                           user, passwd, chappap, pdptype);
     },
 
     deactivateDataCall: function() {
       var phone = window.navigator.mozTelephony;
       
-      phone.deactivateDataCall("0001", "0");
+      phone.deactivateDataCall("1", "0");
     },
   }
   
